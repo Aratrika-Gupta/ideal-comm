@@ -5,7 +5,7 @@ import cors from 'cors';
 import { LanguageServiceClient } from "@google-cloud/language";
 import { GoogleGenerativeAI } from "@google/generative-ai";
 
-process.env.GOOGLE_APPLICATION_CREDENTIALS = './learnquest-430005-a806ac9f594c.json';
+process.env.GOOGLE_APPLICATION_CREDENTIALS = 'file_path_to_your_json_from_gcp';
 
 const languageClient = new LanguageServiceClient();
 
@@ -20,7 +20,6 @@ async function analyzeSentiment(text) {
 }
 
 function extractSnippet(body, maxLength = 500) {
-  // Extracts a snippet from the body up to a specified length
   return body.length > maxLength ? body.substring(0, maxLength) + '...' : body;
 }
 
@@ -30,7 +29,7 @@ function extractSnippet(body, maxLength = 500) {
 // Use CORS to allow requests from the frontend
 const app = express();
 app.use(cors({
-  origin: 'http://localhost:3002', // Allow requests from frontend
+  origin: 'http://localhost:3002', //make sure to run your frontend in port 3002, else you will face errors.
 }));
 
 const document = {
@@ -91,9 +90,6 @@ app.get("/oauth/exchange", async (req, res) => {
   try {
     const response = await nylas.auth.exchangeCodeForToken(codeExchangePayload);
     const { grantId } = response;
-
-    // NB: This stores in RAM
-    // In a real app you would store this in a database, associated with a user
     process.env.USER_GRANT_ID = grantId;
 
     res.redirect("http://localhost:3002/choice");
@@ -121,7 +117,6 @@ app.get("/nylas/recent-emails", async (req, res) => {
     }
 
     const summaries = await Promise.all(messages.map(async (message) => {
-      // Ensure message.body is defined and use a default if not
       const body = message.snippet || 'No content available';
       const snippet = extractSnippet(body);
       const sentiment = await analyzeSentiment(snippet);
