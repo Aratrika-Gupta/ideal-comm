@@ -1,0 +1,25 @@
+{
+  "name": "email",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "start": "nodemon index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@google-cloud/aiplatform": "^3.27.0",
+    "@google-cloud/language": "^6.5.0",
+    "@google-cloud/translate": "^8.4.0",
+    "@google/generative-ai": "^0.17.1",
+    "cors": "^2.8.5",
+    "dotenv": "^16.4.1",
+    "express": "^4.18.2",
+    "nodemon": "^3.0.3",
+    "nylas": "^7.0.0"
+  }
+}
