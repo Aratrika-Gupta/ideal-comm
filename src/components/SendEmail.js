@@ -20,7 +20,7 @@ function SendEmail() {
     });
   };
 
-  const genAI = new GoogleGenerativeAI("AIzaSyACHRZp8xni8_If55wtKfa5_S2fWRfMi2c");
+  const genAI = new GoogleGenerativeAI("YOUR_GOOGLE_API_KEY");
 
   const generateEmailBody = async (prompt) => {
     try {
