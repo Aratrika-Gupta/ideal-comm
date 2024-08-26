@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import DOMPurify from 'dompurify'; // For sanitizing HTML content
-import { GoogleGenerativeAI } from '@google/generative-ai'; // Adjust according to the actual package name
+import DOMPurify from 'dompurify'; 
+import { GoogleGenerativeAI } from '@google/generative-ai'; 
 import { CardSpotlight } from "./ui/card-spotlight.js";
 
-const genAI = new GoogleGenerativeAI("AIzaSyACHRZp8xni8_If55wtKfa5_S2fWRfMi2c");
+const genAI = new GoogleGenerativeAI("YOUR_GOOGLE_API_KEY");
 
 const generateAIResponse = async (prompt) => {
   try {
@@ -59,17 +59,11 @@ function EmailList() {
   };
 
   const formatResponse = (text) => {
-    // Split the text into paragraphs
     const paragraphs = text.split("\n").filter((para) => para.trim() !== "");
   
     return paragraphs.map((paragraph, index) => {
-      // Replace **text** with <strong>text</strong>
       const boldFormatted = paragraph.replace(/\*\*(.*?)\*\*/g, "<strong>$1</strong>");
-      
-      // Replace _text_ with <em>text</em>
       const italicFormatted = boldFormatted.replace(/_(.*?)_/g, "<em>$1</em>");
-  
-      // Check if the paragraph starts with a number (for options)
       const isOption = /^\d+\.\s/.test(paragraph);
       return (
         <p
